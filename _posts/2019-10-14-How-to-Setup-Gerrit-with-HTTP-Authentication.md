@@ -1,4 +1,10 @@
-# Gerrit Setup with Apache HTTP Authentication
+---
+layout: post
+title: Gerrit Setup with HTTP Authentication
+categories: [Operation]
+---
+
+
 
 - Gerrit Version: gerrit-2.15.13
 
@@ -103,8 +109,33 @@ Use following commands to create users(assume you have apache2 installed)
 ```shell
 sudo htpasswd -c /etc/apache2/gerrit.htpasswd admin # Create first user, need -c
 sudo htpasswd /etc/apache2/gerrit.htpasswd $username # Create normal user
+```
+
+
+
+## Nginx Configuration
+
+File `/etc/nginx/conf.d/gerrit.conf` is like this:
 
 ```
+server {
+   listen 80;
+   server_name review.example.com;
+   
+   location ^~ /gerrit/ {
+     auth_basic "Gerrit User Authentication";
+     auth_basic_user_file /etc/apache2/gerrit.htpasswd;
+     proxy_pass        http://127.0.0.1:8081;
+     proxy_set_header  X-Forwarded-For $remote_addr;
+     proxy_set_header  Host $host;
+           }
+} 
+
+```
+
+The auth_basic_user_file configuratioin is same as apache.
+
+
 
 
 
@@ -125,4 +156,10 @@ Finally, I open my firefox browser, and type `review.example.com/gerrit/`,  I ca
 
 https://gerrit-review.googlesource.com/Documentation/install.html
 
+https://www.gerritcodereview.com/install.html
+
+https://www.gerritcodereview.com/config-reverseproxy.html
+
 https://vitux.com/how-to-install-and-configure-apache-web-server-on-ubuntu/
+
+https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
