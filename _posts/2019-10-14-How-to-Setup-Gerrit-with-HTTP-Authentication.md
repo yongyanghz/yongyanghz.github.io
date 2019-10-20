@@ -11,11 +11,14 @@ categories: [Operation]
 - Apache Version:
 
   Server version: Apache/2.4.18 (Ubuntu)
-  Server built:   2019-09-16T13:13:53
+
+- nginx version: nginx/1.10.3 (Ubuntu)
+
+  
 
 ## Gerrit Install and Configure
 
-Follow this guide  https://gerrit-review.googlesource.com/Documentation/install.html
+Follow  [this guide]( https://gerrit-review.googlesource.com/Documentation/install.html) to install Gerrit.
 
 File content of  `$your_site_path/etc/gerrit.config`
 
@@ -71,9 +74,7 @@ ff02::2 ip6-allrouters
 
 ## Apache Configure
 
-Install Apache2 follow this guide https://vitux.com/how-to-install-and-configure-apache-web-server-on-ubuntu/
-
-
+Follow [this guide]( https://vitux.com/how-to-install-and-configure-apache-web-server-on-ubuntu/) to install Apache.
 
 `your_site.conf` in `/etc/apache2/sites-available/`, which have done this  command
 
@@ -154,12 +155,12 @@ Finally, I open my firefox browser, and type `review.example.com/gerrit/`,  I ca
 
 ## Reference
 
-https://gerrit-review.googlesource.com/Documentation/install.html
+[https://gerrit-review.googlesource.com/Documentation/install.html](https://gerrit-review.googlesource.com/Documentation/install.html)
 
-https://www.gerritcodereview.com/install.html
+[https://www.gerritcodereview.com/install.html](https://www.gerritcodereview.com/install.html)
 
-https://www.gerritcodereview.com/config-reverseproxy.html
+[https://www.gerritcodereview.com/config-reverseproxy.html](https://www.gerritcodereview.com/config-reverseproxy.html)
 
-https://vitux.com/how-to-install-and-configure-apache-web-server-on-ubuntu/
+[https://vitux.com/how-to-install-and-configure-apache-web-server-on-ubuntu/](https://vitux.com/how-to-install-and-configure-apache-web-server-on-ubuntu/)
 
-https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/
+[https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/)
