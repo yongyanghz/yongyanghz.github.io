@@ -1,0 +1,181 @@
+---
+layout: post
+little: C++ String Types Summaries
+categories: [C++]
+---
+
+## strings in C Standard
+
+- `char*`
+
+There's no string type in C language, the basic type is char. We can use `char*`to represent a string.
+
+One `char` takes 1 byte in memory, which can represent `2^8 = 256` different values.
+
+- `wchar_t`
+
+`wchar_t` is defined for the C standard library and it is compiler-dependent, therefore not very portable.  `wchar_t` takes 2 bytes in memory, it can represent `2*16=65536` different values, which suitable for large character sets.
+
+
+
+## strings in std name space
+
+- std::string
+
+`typedef basic_string<char> string;`
+
+Strings are objects that represent sequences of characters.
+
+- `std::wstring`
+
+`typedef basic_string<wchar_t> wstring;`
+
+String class for wide character.
+
+
+
+## strings on Visual C++ compiler
+
+- `WCHAR`
+
+A 16-bit Unicode character.
+
+`WCHAR`'s definition is as follows:
+
+```cpp
+#if !defined(_NATIVE_WCHAR_T_DEFINED)
+    typedef unsigned short WCHAR;
+    #else
+    typedef wchar_t WCHAR;
+    #endif
+```
+
+https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar
+
+- CString
+
+ A `CString` object supports either the **char** type or the `wchar_t` type, depending on whether the MBCS symbol or the UNICODE symbol is defined at compile time.
+
+https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/using-cstring?view=vs-2019
+
+
+- CStringA
+
+A `CStringA` object contains the **char** type, and supports single-byte and multi-byte (MBCS) strings.
+
+
+- CStringW
+
+A `CStringW` object contains the **wchar_t** type and supports Unicode strings. 
+
+
+- LPCSTR
+
+An LPCSTR is a 32-bit pointer to a constant null-terminated string of 8-bit Windows ([ANSI](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/a66edeb1-52a0-4d64-a93b-2f5c833d7d92#gt_100cd8a6-5cb1-4895-9de6-e4a3c224a583)) characters.
+
+
+`LPCSTR` is declared as follows:
+
+```cpp
+typedef const char* LPCSTR
+```
+
+- LPCTSTR
+
+`LPCSTR` is a pointer to  a `const TCHAR` string. (`TCHAR` being either a wide char or char depending on whether UNICODE is defined in your project)
+
+
+- LPTSTR
+
+`LPTST` is a pointer to a non-const `TCHAR` string
+
+
+- `_T`
+
+`_T` stands for “text”. It will turn your literal into a Unicode wide character literal if and only if you are compiling your sources with Unicode support.
+
+
+### Generic-Text Data Type Mappings
+
+| Generic-Text Data Type Name | _UNICODE & _MBCS Not Defined        | _MBCS Defined                       | _UNICODE Defined                                             |
+| :-------------------------- | :---------------------------------- | :---------------------------------- | :----------------------------------------------------------- |
+| `_TCHAR`                    | **char**                            | **char**                            | **wchar_t**                                                  |
+| `_TINT`                     | **int**                             | **unsigned int**                    | `wint_t`                                                     |
+| `_TSCHAR`                   | **signed char**                     | **signed char**                     | **wchar_t**                                                  |
+| `_TUCHAR`                   | **unsigned char**                   | **unsigned char**                   | **wchar_t**                                                  |
+| `_TXCHAR`                   | **char**                            | **unsigned char**                   | **wchar_t**                                                  |
+| `_T` or `_TEXT`             | No effect (removed by preprocessor) | No effect (removed by preprocessor) | `L` (converts the following character or string to its Unicode counterpart) |
+
+[https://docs.microsoft.com/en-us/cpp/text/generic-text-mappings-in-tchar-h?redirectedfrom=MSDN&view=vs-2019](https://docs.microsoft.com/en-us/cpp/text/generic-text-mappings-in-tchar-h?redirectedfrom=MSDN&view=vs-2019)
+
+## Convert From Each Other
+
+Common string types tranform from each other.
+
+- `char` to `wchar_t`
+
+  
+
+- `CString` to `std::string`
+
+  From [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other]
+
+  On Visual C++ Compiler
+
+  ```cpp
+  std::string CString2StdString(CString cstr){
+      // Convert a TCHAR string to a LPCSTR
+      CT2A pszConvertedAnsiString(cstr);
+      // Construct a std::string using the LPCSTR input
+      std::string str(pszConvertedAnsiString);
+      return str;
+  }
+  ```
+
+  
+
+- `std::string` to `CString`
+
+  On Visual C++ Compiler
+
+  ```cpp
+  CString StdString2CString(std::string str){
+  	//Construct a CString using const char*
+  	CString cstr(str.c_str());
+  	return cstr;
+  }
+  ```
+
+  
+
+- `const char*`  to `std::string`
+
+  ```cpp
+  const char* cchar = "Hello, World!\n"
+  std::string str(cchar);
+  ```
+
+  
+
+- `std::string` to `const char*`
+
+  ```cpp
+  std::string str("Hello, World!\n");
+  const char* cchar = str.c_str();
+  ```
+
+  
+
+## References 
+
+[https://stackoverflow.com/questions/23136837/in-c-when-to-use-wchar-and-when-to-use-char](https://stackoverflow.com/questions/23136837/in-c-when-to-use-wchar-and-when-to-use-char)
+
+[http://www.cplusplus.com/reference/string/wstring/](http://www.cplusplus.com/reference/string/wstring/)
+
+[http://icu-project.org/docs/papers/unicode_wchar_t.html](http://icu-project.org/docs/papers/unicode_wchar_t.html)
+
+[https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar](https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar)
+
+[https://docs.microsoft.com/en-us/cpp/text/generic-text-mappings-in-tchar-h?redirectedfrom=MSDN&view=vs-2019](https://docs.microsoft.com/en-us/cpp/text/generic-text-mappings-in-tchar-h?redirectedfrom=MSDN&view=vs-2019)
+
+[https://stackoverflow.com/questions/321413/lpcstr-lpctstr-and-lptstr](https://stackoverflow.com/questions/321413/lpcstr-lpctstr-and-lptst)
