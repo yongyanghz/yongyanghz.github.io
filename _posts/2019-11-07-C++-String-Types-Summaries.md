@@ -4,7 +4,7 @@ little: C++ String Types Summaries
 categories: [C++]
 ---
 
-## strings in c standard
+## Strings in C Standard
 
 - **`char*`**
 
@@ -58,7 +58,7 @@ The syntax of this is, if the word `const` is at the left side of the asterisk, 
 
 
 
-## strings in std name space
+## Strings in std name space
 
 - **`std::string`**
 
@@ -74,7 +74,7 @@ String class for wide character.
 
 
 
-## strings on Visual C++ compiler
+## Strings on Visual C++ compiler
 
 - **`WCHAR`**
 
@@ -133,8 +133,7 @@ typedef const char* LPCSTR
 
 `_T` stands for “text”. It will turn your literal into a Unicode wide character literal if and only if you are compiling your sources with Unicode support.
 
-
-### Generic-Text Data Type Mappings
+#### Generic-Text Data Type Mappings
 
 | Generic-Text Data Type Name | _UNICODE & _MBCS Not Defined        | _MBCS Defined                       | _UNICODE Defined                                             |
 | :-------------------------- | :---------------------------------- | :---------------------------------- | :----------------------------------------------------------- |
@@ -158,7 +157,7 @@ Common string types transform from each other.
   ```cpp
   std::wstring CharPt2WcharPt(const char* ch){
   	const size_t ch_size = strlen(ch) + 1; // strlen does not include the terminating null-character 
-  	std::wstring wc(ch_size, L'#');
+  	std::wstring wc(ch_size, L'#'); // L is the prefix for wide character literals
   	mbstowcs(&wc[0], ch, ch_size); // Converts a multibyte character string to wide string, given state
   	return wc;
   }
@@ -172,7 +171,7 @@ Same as above, cause  C++ does not support C99 variable length arrays, use `std:
 ```cpp
 std::string WCharPt2CharPt(const wchar_t* wch){
 	const size_t wch_size = wcslen(wch) + 1;// wcslen does not include the terminating null-character 
-	std::string ch(wch_size, L'#');
+	std::string ch(wch_size, '#');
 	wcstombs(&ch[0], wch, wch_size); // Converts a wide string to narrow multibyte character string
     return ch;
 }
@@ -247,3 +246,5 @@ std::string WCharPt2CharPt(const wchar_t* wch){
 [https://irfansworld.wordpress.com/2011/01/25/what-is-unicode-and-non-unicode-data-formats/](https://irfansworld.wordpress.com/2011/01/25/what-is-unicode-and-non-unicode-data-formats/)
 
 [https://stackoverflow.com/questions/2853615/get-length-of-wchar-t-in-c](https://stackoverflow.com/questions/2853615/get-length-of-wchar-t-in-c)
+
+[https://www.geeksforgeeks.org/wide-char-and-library-functions-in-c/](https://www.geeksforgeeks.org/wide-char-and-library-functions-in-c/)
