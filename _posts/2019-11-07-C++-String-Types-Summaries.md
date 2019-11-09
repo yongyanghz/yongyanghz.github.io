@@ -6,19 +6,19 @@ categories: [C++]
 
 ## strings in c standard
 
-- `char*`
+- **`char*`**
 
 There's no string type in C language, the basic type is char. We can use `char*`to represent a string.
 
 One `char` takes 1 byte in memory, which can represent `2^8 = 256` different values.
 
-- `wchar_t`
+- **`wchar_t`**
 
 `wchar_t` is defined for the C standard library and it is compiler-dependent, therefore not very portable.  
 
 
 
-From http://icu-project.org/docs/papers/unicode_wchar_t.html:
+From [http://icu-project.org/docs/papers/unicode_wchar_t.html](http://icu-project.org/docs/papers/unicode_wchar_t.html):
 
 
 
@@ -40,7 +40,7 @@ Non-Unicode is applied in less character set, like English, requires 1 byte per 
 
 
 
-- `const char *`  and `char * const`
+- **`const char *`  and `char * const`**
 
 From book "Effective C++: 55 Specific Ways to Improve Your Programs and Designs By Scott Meyan " Item 3,
 
@@ -60,13 +60,13 @@ The syntax of this is, if the word `const` is at the left side of the asterisk, 
 
 ## strings in std name space
 
-- `std::string`
+- **`std::string`**
 
 `typedef basic_string<char> string;`
 
 Strings are objects that represent sequences of characters.
 
-- `std::wstring`
+- **`std::wstring`**
 
 `typedef basic_string<wchar_t> wstring;`
 
@@ -76,7 +76,7 @@ String class for wide character.
 
 ## strings on Visual C++ compiler
 
-- `WCHAR`
+- **`WCHAR`**
 
 A 16-bit Unicode character.
 
@@ -92,27 +92,26 @@ A 16-bit Unicode character.
 
 [https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar](https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar)
 
-- `CString`
+- **`CString`**
 
  A `CString` object supports either the **char** type or the `wchar_t` type, depending on whether the MBCS symbol or the UNICODE symbol is defined at compile time.
 
 [https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/using-cstring?view=vs-2019](https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/using-cstring?view=vs-2019)
 
 
-- `CStringA`
+- **`CStringA`**
 
 A `CStringA` object contains the **char** type, and supports single-byte and multi-byte (MBCS) strings.
 
 
-- `CStringW`
+- **`CStringW`**
 
 A `CStringW` object contains the **wchar_t** type and supports Unicode strings. 
 
 
-- `LPCSTR`
+- **`LPCSTR`**
 
 An LPCSTR is a 32-bit pointer to a constant null-terminated string of 8-bit Windows ([ANSI](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/a66edeb1-52a0-4d64-a93b-2f5c833d7d92#gt_100cd8a6-5cb1-4895-9de6-e4a3c224a583)) characters.
-
 
 `LPCSTR` is declared as follows:
 
@@ -120,17 +119,17 @@ An LPCSTR is a 32-bit pointer to a constant null-terminated string of 8-bit Wind
 typedef const char* LPCSTR
 ```
 
-- LPCTSTR
+- **`LPCTSTR`**
 
 `LPCSTR` is a pointer to  a `const TCHAR` string. (`TCHAR` being either a wide char or char depending on whether UNICODE is defined in your project)
 
 
-- LPTSTR
+- **`LPTSTR`**
 
 `LPTST` is a pointer to a non-const `TCHAR` string
 
 
-- `_T`
+- **`_T`**
 
 `_T` stands for “text”. It will turn your literal into a Unicode wide character literal if and only if you are compiling your sources with Unicode support.
 
@@ -150,13 +149,38 @@ typedef const char* LPCSTR
 
 ## Convert From Each Other
 
-Common string types tranform from each other.
+Common string types transform from each other.
 
-- `char` to `wchar_t`
+- **`char*` to `wchar_t*`**
 
+  From [stackoverflow](https://stackoverflow.com/questions/8032080/how-to-convert-char-to-wchar-t), use `std::wstring` instead of a C99 variable length array.  cause C++ does not support C99 variable length arrays,  the current standard guarantees a contiguous buffer for `std::basic_string`.
+
+  ```cpp
+  std::wstring CharPt2WcharPt(const char* ch){
+  	const size_t ch_size = strlen(ch) + 1; // strlen does not include the terminating null-character 
+  	std::wstring wc(ch_size, L'#');
+  	mbstowcs(&wc[0], ch, ch_size); // Converts a multibyte character string to wide string, given state
+  	return wc;
+  }
   
+  ```
 
-- `CString` to `std::string`
+- **`wchar_t*` to `char*`**
+
+Same as above, cause  C++ does not support C99 variable length arrays, use `std::string` instead.
+
+```cpp
+std::string WCharPt2CharPt(const wchar_t* wch){
+	const size_t wch_size = wcslen(wch) + 1;// wcslen does not include the terminating null-character 
+	std::string ch(wch_size, L'#');
+	wcstombs(&ch[0], wch, wch_size); // Converts a wide string to narrow multibyte character string
+    return ch;
+}
+```
+
+
+
+- **`CString` to `std::string`**
 
   From [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other)
 
@@ -174,7 +198,7 @@ Common string types tranform from each other.
 
   
 
-- `std::string` to `CString`
+- **`std::string` to `CString`**
 
   On Visual C++ Compiler
 
@@ -188,7 +212,7 @@ Common string types tranform from each other.
 
   
 
-- `const char*`  to `std::string`
+- **`const char*`  to `std::string`**
 
   ```cpp
   const char* cchar = "Hello, World!\n"
@@ -197,7 +221,7 @@ Common string types tranform from each other.
 
   
 
-- `std::string` to `const char*`
+- **`std::string` to `const char*`**
 
   ```cpp
   std::string str("Hello, World!\n");
@@ -220,4 +244,6 @@ Common string types tranform from each other.
 
 [https://stackoverflow.com/questions/321413/lpcstr-lpctstr-and-lptstr](https://stackoverflow.com/questions/321413/lpcstr-lpctstr-and-lptst)
 
-https://irfansworld.wordpress.com/2011/01/25/what-is-unicode-and-non-unicode-data-formats/
+[https://irfansworld.wordpress.com/2011/01/25/what-is-unicode-and-non-unicode-data-formats/](https://irfansworld.wordpress.com/2011/01/25/what-is-unicode-and-non-unicode-data-formats/)
+
+[https://stackoverflow.com/questions/2853615/get-length-of-wchar-t-in-c](https://stackoverflow.com/questions/2853615/get-length-of-wchar-t-in-c)
