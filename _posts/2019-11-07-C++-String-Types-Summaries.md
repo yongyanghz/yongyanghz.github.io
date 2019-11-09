@@ -4,7 +4,7 @@ little: C++ String Types Summaries
 categories: [C++]
 ---
 
-## strings in C Standard
+## strings in c standard
 
 - `char*`
 
@@ -14,13 +14,53 @@ One `char` takes 1 byte in memory, which can represent `2^8 = 256` different val
 
 - `wchar_t`
 
-`wchar_t` is defined for the C standard library and it is compiler-dependent, therefore not very portable.  `wchar_t` takes 2 bytes in memory, it can represent `2*16=65536` different values, which suitable for large character sets.
+`wchar_t` is defined for the C standard library and it is compiler-dependent, therefore not very portable.  
+
+
+
+From http://icu-project.org/docs/papers/unicode_wchar_t.html:
+
+
+
+*`wchar_t` is compiler-dependent and therefore not very  portable. Using it for Unicode binds a program to the character model of a compiler. Instead, it is often better to define and use dedicated  data types.*
+
+
+
+`wchar_t` takes 2 bytes in memory, it can represent `2*16=65536` different values, which suitable for large character sets.
+
+
+
+The [Unicode](https://en.wikipedia.org/wiki/Unicode) standard defins UTF-8, defines [UTF-8](https://en.wikipedia.org/wiki/UTF-8), [UTF-16](https://en.wikipedia.org/wiki/UTF-16), and [UTF-32](https://en.wikipedia.org/wiki/UTF-32), and several other encodings.
+
+UTF-8, uses one byte for the first 128 code points, and up to 4 bytes for other characters.
+
+
+
+Non-Unicode is applied in less character set, like English, requires 1 byte per character.
+
+
+
+- `const char *`  and `char * const`
+
+From book "Effective C++: 55 Specific Ways to Improve Your Programs and Designs By Scott Meyan " Item 3,
+
+For pointers, the `const` keyword can specify whether the pointer is `const` or the data it points to is `const`.
+
+The syntax of this is, if the word `const` is at the left side of the asterisk,  what's  the pointer pointed to is constant; If the word `const` is at the right side of the asterisk, the pointer it self is constant.
+
+
+
+`const char *` means the pointer is non-const,  the char  data it points to is const;
+
+
+
+`char * const` means the pointer is const, the string data it points to is non-const.
 
 
 
 ## strings in std name space
 
-- std::string
+- `std::string`
 
 `typedef basic_string<char> string;`
 
@@ -50,26 +90,26 @@ A 16-bit Unicode character.
     #endif
 ```
 
-https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar
+[https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar](https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar)
 
-- CString
+- `CString`
 
  A `CString` object supports either the **char** type or the `wchar_t` type, depending on whether the MBCS symbol or the UNICODE symbol is defined at compile time.
 
-https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/using-cstring?view=vs-2019
+[https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/using-cstring?view=vs-2019](https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/using-cstring?view=vs-2019)
 
 
-- CStringA
+- `CStringA`
 
 A `CStringA` object contains the **char** type, and supports single-byte and multi-byte (MBCS) strings.
 
 
-- CStringW
+- `CStringW`
 
 A `CStringW` object contains the **wchar_t** type and supports Unicode strings. 
 
 
-- LPCSTR
+- `LPCSTR`
 
 An LPCSTR is a 32-bit pointer to a constant null-terminated string of 8-bit Windows ([ANSI](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/a66edeb1-52a0-4d64-a93b-2f5c833d7d92#gt_100cd8a6-5cb1-4895-9de6-e4a3c224a583)) characters.
 
@@ -118,7 +158,7 @@ Common string types tranform from each other.
 
 - `CString` to `std::string`
 
-  From [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other]
+  From [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other)
 
   On Visual C++ Compiler
 
@@ -179,3 +219,5 @@ Common string types tranform from each other.
 [https://docs.microsoft.com/en-us/cpp/text/generic-text-mappings-in-tchar-h?redirectedfrom=MSDN&view=vs-2019](https://docs.microsoft.com/en-us/cpp/text/generic-text-mappings-in-tchar-h?redirectedfrom=MSDN&view=vs-2019)
 
 [https://stackoverflow.com/questions/321413/lpcstr-lpctstr-and-lptstr](https://stackoverflow.com/questions/321413/lpcstr-lpctstr-and-lptst)
+
+https://irfansworld.wordpress.com/2011/01/25/what-is-unicode-and-non-unicode-data-formats/
