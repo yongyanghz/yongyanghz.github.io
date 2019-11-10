@@ -202,13 +202,9 @@ std::string WCharPt2String(const wchar_t* wch){
 
 ### On Visual C++ Compilers
 
-
-
 - **`CString` to `std::string`**
 
   Following code is from [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other).
-
-  On Visual C++ Compiler
 
   ```cpp
   std::string CString2StdString(CString cstr){
@@ -224,8 +220,6 @@ std::string WCharPt2String(const wchar_t* wch){
 
 - **`std::string` to `CString`**
 
-  On Visual C++ Compiler
-
   ```cpp
   CString StdString2CString(std::string str){
   	//Construct a CString using const char*
@@ -236,8 +230,8 @@ std::string WCharPt2String(const wchar_t* wch){
 
   
 
-  #### `CStringT`
 
+#### `CStringT`
 
 The `CString`, `CStringA`, and `CStringW` classes are specializations of a class template[ `CStringT`](https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/reference/cstringt-class?view=vs-2019#cstringt), according to `CStringT`'s constructor, `CStringT` can be constructed from `CStringT`, which means  `CString`, `CStringA`, and `CStringW` can be constructed from each other.
 
