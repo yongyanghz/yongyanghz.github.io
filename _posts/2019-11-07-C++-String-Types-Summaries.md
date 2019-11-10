@@ -50,11 +50,11 @@ The syntax of this is, if the word `const` is at the left side of the asterisk, 
 
 
 
-`const char *` means the pointer is non-const,  the char  data it points to is const;
+`const char *` means the pointer is non-const,  the char/string  data it points to is const;
 
 
 
-`char * const` means the pointer is const, the string data it points to is non-const.
+`char * const` means the pointer is const, the char/string data it points to is non-const.
 
 
 
@@ -148,14 +148,18 @@ typedef const char* LPCSTR
 
 ## Convert From Each Other
 
-Common string types transform from each other.
+### Common String Types
 
-- **`char*` to `wchar_t*`**
+- **`char*` to `wchar_t*` (`char*` to `std::wstring`)** 
 
-  From [stackoverflow](https://stackoverflow.com/questions/8032080/how-to-convert-char-to-wchar-t), use `std::wstring` instead of a C99 variable length array.  cause C++ does not support C99 variable length arrays,  the current standard guarantees a contiguous buffer for `std::basic_string`.
+  [C99](https://en.wikipedia.org/wiki/C99)  standard and [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision)) standard support variable-length arrays,  but [C++11](https://en.wikipedia.org/wiki/C%2B%2B11) standard does not support variable-length arrays, defining an array requires a constant expression. So unless you are develop in a pure C environment, in C++ field, use `std::wstring` instead of a [C99](https://en.wikipedia.org/wiki/C99)  variable-length array. `std::sting` is a contiguous-memory container, which store `char` in one or more (dynamically alocated) chunks of memory (See"Effective STL" by Scott Meyers, item 1).
+
+  
+
+  Following code refer from [stackoverflow](https://stackoverflow.com/questions/8032080/how-to-convert-char-to-wchar-t).
 
   ```cpp
-  std::wstring CharPt2WcharPt(const char* ch){
+  std::wstring CharPt2WString(const char* ch){
   	const size_t ch_size = strlen(ch) + 1; // strlen does not include the terminating null-character 
   	std::wstring wc(ch_size, L'#'); // L is the prefix for wide character literals
   	mbstowcs(&wc[0], ch, ch_size); // Converts a multibyte character string to wide string, given state
@@ -164,12 +168,12 @@ Common string types transform from each other.
   
   ```
 
-- **`wchar_t*` to `char*`**
+- **`wchar_t*` to `char*` (`wchar_t*` to`std::string`)**
 
-Same as above, cause  C++ does not support C99 variable length arrays, use `std::string` instead.
+Same as above, cause  C++ does not support [C99](https://en.wikipedia.org/wiki/C99) variable-length arrays, use `std::string` instead.
 
 ```cpp
-std::string WCharPt2CharPt(const wchar_t* wch){
+std::string WCharPt2String(const wchar_t* wch){
 	const size_t wch_size = wcslen(wch) + 1;// wcslen does not include the terminating null-character 
 	std::string ch(wch_size, '#');
 	wcstombs(&ch[0], wch, wch_size); // Converts a wide string to narrow multibyte character string
@@ -177,11 +181,32 @@ std::string WCharPt2CharPt(const wchar_t* wch){
 }
 ```
 
+- **`const char*`  to `std::string`**
+
+  ```cpp
+  const char* cchar = "Hello, World!\n"
+  std::string str(cchar);
+  ```
+
+  
+
+- **`std::string` to `const char*`**
+
+  ```cpp
+  std::string str("Hello, World!\n");
+  const char* cchar = str.c_str();
+  ```
+
+
+
+
+### On Visual C++ Compilers
+
 
 
 - **`CString` to `std::string`**
 
-  From [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other)
+  Following code is from [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other).
 
   On Visual C++ Compiler
 
@@ -211,20 +236,68 @@ std::string WCharPt2CharPt(const wchar_t* wch){
 
   
 
-- **`const char*`  to `std::string`**
+  #### `CStringT`
+
+
+The `CString`, `CStringA`, and `CStringW` classes are specializations of a class template[ `CStringT`](https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/reference/cstringt-class?view=vs-2019#cstringt), according to `CStringT`'s constructor, `CStringT` can be constructed from `CStringT`, which means  `CString`, `CStringA`, and `CStringW` can be constructed from each other.
+
+```cpp
+CStringT(const CStringT& strSrc) :
+    CThisSimpleString( strSrc);
+```
+
+
+
+- **`CString` to  `CStringW`**
 
   ```cpp
-  const char* cchar = "Hello, World!\n"
-  std::string str(cchar);
+  CString cstr = CString(_T("Hello world!\n"));
+  CStringW cstrw(cstr);
   ```
 
   
 
-- **`std::string` to `const char*`**
+- **`CStringW` to  `CString`**
 
   ```cpp
-  std::string str("Hello, World!\n");
-  const char* cchar = str.c_str();
+  CStringW cstrw = CStringW(L"Hello world!\n");
+  CString cstr(cstrw);
+  ```
+
+  
+
+- **`CString` to  `CStringA`**
+
+  ```cpp
+  CString cstr = CString(_T("Hello world!\n"));
+  CStringA cstra(cstr);
+  ```
+
+  
+
+- **`CStringA` to  `CString`**
+
+  ```cpp
+  CStringA cstra = CStringA("Hello world!\n");
+  CStringA cstr(cstra);
+  ```
+
+  
+
+- **`CStringA` to  `CStringW`**
+
+  ```cpp
+  CStringA cstra = CStringA("Hello world!\n");
+  CStringW cstrw(cstra);
+  ```
+
+  
+
+- **`CStringW` to  `CStringA`**
+
+  ```cpp
+  CStringW cstrw = CStringW(L"Hello world!\n");
+  CStringA cstra(cstrw);
   ```
 
   
@@ -233,7 +306,11 @@ std::string WCharPt2CharPt(const wchar_t* wch){
 
 [https://stackoverflow.com/questions/23136837/in-c-when-to-use-wchar-and-when-to-use-char](https://stackoverflow.com/questions/23136837/in-c-when-to-use-wchar-and-when-to-use-char)
 
+[https://stackoverflow.com/questions/8032080/how-to-convert-char-to-wchar-t](https://stackoverflow.com/questions/8032080/how-to-convert-char-to-wchar-t)
+
 [http://www.cplusplus.com/reference/string/wstring/](http://www.cplusplus.com/reference/string/wstring/)
+
+[http://www.cplusplus.com/reference/string/basic_string/](http://www.cplusplus.com/reference/string/basic_string/)
 
 [http://icu-project.org/docs/papers/unicode_wchar_t.html](http://icu-project.org/docs/papers/unicode_wchar_t.html)
 
@@ -248,3 +325,5 @@ std::string WCharPt2CharPt(const wchar_t* wch){
 [https://stackoverflow.com/questions/2853615/get-length-of-wchar-t-in-c](https://stackoverflow.com/questions/2853615/get-length-of-wchar-t-in-c)
 
 [https://www.geeksforgeeks.org/wide-char-and-library-functions-in-c/](https://www.geeksforgeeks.org/wide-char-and-library-functions-in-c/)
+
+[https://www.geeksforgeeks.org/variable-length-arrays-in-c-and-c/](https://www.geeksforgeeks.org/variable-length-arrays-in-c-and-c/)
