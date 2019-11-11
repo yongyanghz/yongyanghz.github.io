@@ -5,7 +5,7 @@ categories: [Math]
 
 ---
 
-[This interesting math problem is from an interview of mine, if any suspected infringement of knowledge property,  please contact me via email.]
+[This interesting math problem is from an interview of mine, if sany suspected infringement of knowledge property,  please contact me via email.]
 
 ## Problem Description
 
