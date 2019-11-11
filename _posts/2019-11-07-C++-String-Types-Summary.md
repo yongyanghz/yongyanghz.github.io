@@ -1,18 +1,25 @@
 ---
 layout: post
-little: C++ String Types Summaries
+little: C++ String Types Summary
 categories: [C++]
+
 ---
+
+
+
+[TOC]
+
+
 
 ## Strings in C Standard
 
-- **`char*`**
+#### **`char*`**
 
 There's no string type in C language, the basic type is char. We can use `char*`to represent a string.
 
 One `char` takes 1 byte in memory, which can represent `2^8 = 256` different values.
 
-- **`wchar_t`**
+#### **`wchar_t`**
 
 `wchar_t` is defined for the C standard library and it is compiler-dependent, therefore not very portable.  
 
@@ -30,7 +37,7 @@ From [http://icu-project.org/docs/papers/unicode_wchar_t.html](http://icu-projec
 
 
 
-The [Unicode](https://en.wikipedia.org/wiki/Unicode) standard defins UTF-8, defines [UTF-8](https://en.wikipedia.org/wiki/UTF-8), [UTF-16](https://en.wikipedia.org/wiki/UTF-16), and [UTF-32](https://en.wikipedia.org/wiki/UTF-32), and several other encodings.
+The [Unicode](https://en.wikipedia.org/wiki/Unicode) standard  defines [UTF-8](https://en.wikipedia.org/wiki/UTF-8), [UTF-16](https://en.wikipedia.org/wiki/UTF-16), and [UTF-32](https://en.wikipedia.org/wiki/UTF-32), and several other encodings.
 
 UTF-8, uses one byte for the first 128 code points, and up to 4 bytes for other characters.
 
@@ -40,17 +47,15 @@ Non-Unicode is applied in less character set, like English, requires 1 byte per 
 
 
 
-- **`const char *`  and `char * const`**
+#### **`const char *`  and `char * const`**
 
-From book "Effective C++: 55 Specific Ways to Improve Your Programs and Designs By Scott Meyan " Item 3,
-
-For pointers, the `const` keyword can specify whether the pointer is `const` or the data it points to is `const`.
+From book "Effective C++: 55 Specific Ways to Improve Your Programs and Designs By Scott Meyan " Item 3, for pointers, the `const` keyword can specify whether the pointer is `const` or the data it points to is `const`.
 
 The syntax of this is, if the word `const` is at the left side of the asterisk,  what's  the pointer pointed to is constant; If the word `const` is at the right side of the asterisk, the pointer it self is constant.
 
 
 
-`const char *` means the pointer is non-const,  the char/string  data it points to is const;
+`const char *` means the pointer is non-const,  the char/string  data it points to is const.
 
 
 
@@ -60,13 +65,13 @@ The syntax of this is, if the word `const` is at the left side of the asterisk, 
 
 ## Strings in std name space
 
-- **`std::string`**
+#### **`std::string`**
 
 `typedef basic_string<char> string;`
 
 Strings are objects that represent sequences of characters.
 
-- **`std::wstring`**
+#### **`std::wstring`**
 
 `typedef basic_string<wchar_t> wstring;`
 
@@ -76,7 +81,7 @@ String class for wide character.
 
 ## Strings on Visual C++ compiler
 
-- **`WCHAR`**
+#### **`WCHAR`**
 
 A 16-bit Unicode character.
 
@@ -92,24 +97,21 @@ A 16-bit Unicode character.
 
 [https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar](https://docs.microsoft.com/en-us/windows/win32/extensible-storage-engine/wchar)
 
-- **`CString`**
+#### **`CString`**
 
  A `CString` object supports either the **char** type or the `wchar_t` type, depending on whether the MBCS symbol or the UNICODE symbol is defined at compile time.
 
 [https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/using-cstring?view=vs-2019](https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/using-cstring?view=vs-2019)
 
-
-- **`CStringA`**
+#### **`CStringA`**
 
 A `CStringA` object contains the **char** type, and supports single-byte and multi-byte (MBCS) strings.
 
-
-- **`CStringW`**
+#### **`CStringW`**
 
 A `CStringW` object contains the **wchar_t** type and supports Unicode strings. 
 
-
-- **`LPCSTR`**
+#### **`LPCSTR`**
 
 An LPCSTR is a 32-bit pointer to a constant null-terminated string of 8-bit Windows ([ANSI](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-dtyp/a66edeb1-52a0-4d64-a93b-2f5c833d7d92#gt_100cd8a6-5cb1-4895-9de6-e4a3c224a583)) characters.
 
@@ -119,17 +121,15 @@ An LPCSTR is a 32-bit pointer to a constant null-terminated string of 8-bit Wind
 typedef const char* LPCSTR
 ```
 
-- **`LPCTSTR`**
+#### **`LPCTSTR`**
 
 `LPCSTR` is a pointer to  a `const TCHAR` string. (`TCHAR` being either a wide char or char depending on whether UNICODE is defined in your project)
 
-
-- **`LPTSTR`**
+#### **`LPTSTR`**
 
 `LPTST` is a pointer to a non-const `TCHAR` string
 
-
-- **`_T`**
+#### **`_T`**
 
 `_T` stands for “text”. It will turn your literal into a Unicode wide character literal if and only if you are compiling your sources with Unicode support.
 
@@ -150,25 +150,25 @@ typedef const char* LPCSTR
 
 ### Common String Types
 
-- **`char*` to `wchar_t*` (`char*` to `std::wstring`)** 
+#### **`char*` to `wchar_t*` (`char*` to `std::wstring`)** 
 
-  [C99](https://en.wikipedia.org/wiki/C99)  standard and [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision)) standard support variable-length arrays,  but [C++11](https://en.wikipedia.org/wiki/C%2B%2B11) standard does not support variable-length arrays, defining an array requires a constant expression. So unless you are develop in a pure C environment, in C++ field, use `std::wstring` instead of a [C99](https://en.wikipedia.org/wiki/C99)  variable-length array. `std::sting` is a contiguous-memory container, which store `char` in one or more (dynamically alocated) chunks of memory (See"Effective STL" by Scott Meyers, item 1).
+[C99](https://en.wikipedia.org/wiki/C99)  standard and [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision)) standard support variable-length arrays,  but [C++11](https://en.wikipedia.org/wiki/C%2B%2B11) standard does not support variable-length arrays, defining an array requires a constant expression. So unless you are develop in a pure C environment, in C++ field, use `std::wstring` instead of a [C99](https://en.wikipedia.org/wiki/C99)  variable-length array. `std::sting` is a contiguous-memory container, which store `char` in one or more (dynamically alocated) chunks of memory (See"Effective STL" by Scott Meyers, item 1).
 
-  
 
-  Following code refer from [stackoverflow](https://stackoverflow.com/questions/8032080/how-to-convert-char-to-wchar-t).
 
-  ```cpp
-  std::wstring CharPt2WString(const char* ch){
-  	const size_t ch_size = strlen(ch) + 1; // strlen does not include the terminating null-character 
-  	std::wstring wc(ch_size, L'#'); // L is the prefix for wide character literals
-  	mbstowcs(&wc[0], ch, ch_size); // Converts a multibyte character string to wide string, given state
-  	return wc;
-  }
-  
-  ```
+Following code refer from [stackoverflow](https://stackoverflow.com/questions/8032080/how-to-convert-char-to-wchar-t).
 
-- **`wchar_t*` to `char*` (`wchar_t*` to`std::string`)**
+```cpp
+std::wstring CharPt2WString(const char* ch){
+	const size_t ch_size = strlen(ch) + 1; // strlen does not include the terminating null-character 
+	std::wstring wc(ch_size, L'#'); // L is the prefix for wide character literals
+	mbstowcs(&wc[0], ch, ch_size); // Converts a multibyte character string to wide string, given state
+	return wc;
+}
+
+```
+
+#### **`wchar_t*` to `char*` (`wchar_t*` to`std::string`)**
 
 Same as above, cause  C++ does not support [C99](https://en.wikipedia.org/wiki/C99) variable-length arrays, use `std::string` instead.
 
@@ -181,57 +181,57 @@ std::string WCharPt2String(const wchar_t* wch){
 }
 ```
 
-- **`const char*`  to `std::string`**
+#### **`const char*`  to `std::string`**
 
-  ```cpp
-  const char* cchar = "Hello, World!\n"
-  std::string str(cchar);
-  ```
+```cpp
+const char* cchar = "Hello, World!\n"
+std::string str(cchar);
+```
 
-  
 
-- **`std::string` to `const char*`**
 
-  ```cpp
-  std::string str("Hello, World!\n");
-  const char* cchar = str.c_str();
-  ```
+#### **`std::string` to `const char*`**
+
+```cpp
+std::string str("Hello, World!\n");
+const char* cchar = str.c_str();
+```
 
 
 
 
 ### On Visual C++ Compilers
 
-- **`CString` to `std::string`**
+#### **`CString` to `std::string`**
 
-  Following code is from [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other).
+Following code is from [stackoverflow](https://stackoverflow.com/questions/258050/how-to-convert-cstring-and-stdstring-stdwstring-to-each-other).
 
-  ```cpp
-  std::string CString2StdString(CString cstr){
-      // Convert a TCHAR string to a LPCSTR
-      CT2A pszConvertedAnsiString(cstr);
-      // Construct a std::string using the LPCSTR input
-      std::string str(pszConvertedAnsiString);
-      return str;
-  }
-  ```
-
-  
-
-- **`std::string` to `CString`**
-
-  ```cpp
-  CString StdString2CString(std::string str){
-  	//Construct a CString using const char*
-  	CString cstr(str.c_str());
-  	return cstr;
-  }
-  ```
-
-  
+```cpp
+std::string CString2StdString(CString cstr){
+    // Convert a TCHAR string to a LPCSTR
+    CT2A pszConvertedAnsiString(cstr);
+    // Construct a std::string using the LPCSTR input
+    std::string str(pszConvertedAnsiString);
+    return str;
+}
+```
 
 
-#### `CStringT`
+
+#### **`std::string` to `CString`**
+
+```cpp
+CString StdString2CString(std::string str){
+	//Construct a CString using const char*
+	CString cstr(str.c_str());
+	return cstr;
+}
+```
+
+
+
+
+### `CStringT`
 
 The `CString`, `CStringA`, and `CStringW` classes are specializations of a class template[ `CStringT`](https://docs.microsoft.com/en-us/cpp/atl-mfc-shared/reference/cstringt-class?view=vs-2019#cstringt), according to `CStringT`'s constructor, `CStringT` can be constructed from `CStringT`, which means  `CString`, `CStringA`, and `CStringW` can be constructed from each other.
 
@@ -242,59 +242,59 @@ CStringT(const CStringT& strSrc) :
 
 
 
-- **`CString` to  `CStringW`**
+#### **`CString` to  `CStringW`**
 
-  ```cpp
-  CString cstr = CString(_T("Hello world!\n"));
-  CStringW cstrw(cstr);
-  ```
+```cpp
+CString cstr = CString(_T("Hello world!\n"));
+CStringW cstrw(cstr);
+```
 
-  
 
-- **`CStringW` to  `CString`**
 
-  ```cpp
-  CStringW cstrw = CStringW(L"Hello world!\n");
-  CString cstr(cstrw);
-  ```
+#### **`CStringW` to  `CString`**
 
-  
+```cpp
+CStringW cstrw = CStringW(L"Hello world!\n");
+CString cstr(cstrw);
+```
 
-- **`CString` to  `CStringA`**
 
-  ```cpp
-  CString cstr = CString(_T("Hello world!\n"));
-  CStringA cstra(cstr);
-  ```
 
-  
+#### **`CString` to  `CStringA`**
 
-- **`CStringA` to  `CString`**
+```cpp
+CString cstr = CString(_T("Hello world!\n"));
+CStringA cstra(cstr);
+```
 
-  ```cpp
-  CStringA cstra = CStringA("Hello world!\n");
-  CStringA cstr(cstra);
-  ```
 
-  
 
-- **`CStringA` to  `CStringW`**
+#### **`CStringA` to  `CString`**
 
-  ```cpp
-  CStringA cstra = CStringA("Hello world!\n");
-  CStringW cstrw(cstra);
-  ```
+```cpp
+CStringA cstra = CStringA("Hello world!\n");
+CStringA cstr(cstra);
+```
 
-  
 
-- **`CStringW` to  `CStringA`**
 
-  ```cpp
-  CStringW cstrw = CStringW(L"Hello world!\n");
-  CStringA cstra(cstrw);
-  ```
+#### **`CStringA` to  `CStringW`**
 
-  
+```cpp
+CStringA cstra = CStringA("Hello world!\n");
+CStringW cstrw(cstra);
+```
+
+
+
+#### **`CStringW` to  `CStringA`**
+
+```cpp
+CStringW cstrw = CStringW(L"Hello world!\n");
+CStringA cstra(cstrw);
+```
+
+
 
 ## References 
 
