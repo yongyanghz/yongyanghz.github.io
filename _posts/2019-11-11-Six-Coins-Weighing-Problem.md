@@ -61,11 +61,29 @@ Before you check the answer
 
 ## Solution
 
-Unique 3 vs 1：
-1+2+3 = 6
+First balance, Unique 3 coins vs 1 coin：
+
+[1+2+3]  vs [ 6]
+
+if the result is equal, then go to second balance, otherwise the tags are not correctly labeled. 
 
 Here 1, 2, 3 can change from one other, and 4,5 can change from each other.
-6+1 vs 3+5
-[7, 9]   vs [5, 8] 
-if true 6+1 < 3+5
-else 6+1 >= 3+5
+
+Second balance:
+
+ [6+1]  vs  [3+5]
+
+With all the actual weights possible combinations, left side weight sum range from 7 to 9,  right side weight sum range from 5 to 8.
+
+```latex
+left_sum \in [7, 9]
+right_sum \in [5, 8]
+```
+
+if true:  
+
+​	[6+1]  < [3+5]
+
+else:
+
+​	 [6+1] >= [3+5]
