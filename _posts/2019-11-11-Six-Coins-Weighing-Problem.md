@@ -20,6 +20,41 @@ There are six different coins with the same appearance have different weights, w
 
 
 
+```haskell
+
+Do not look the answers quickly
+
+Think for a while
+
+Before you check the answer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
 
 
 
