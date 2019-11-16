@@ -1,7 +1,7 @@
 ---
 layout: post
-tittle: How To Hack SSH Login Remotely
-categories: hacking
+tittle: How to Hack ssh Login Remotely
+categories: Hacking
 ---
 
 - My OS Info: Ubuntu18.04 LTS Server
